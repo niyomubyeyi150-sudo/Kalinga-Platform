@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #f8f5ef 0%,
+    #eee6d9 50%,
+    #f4f0e8 100%
+  );
+
+  color: #252923;
+  animation: backgroundReveal 0.8s ease-out both;
+}
+
+/* INTRO CONTENT */
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* LOGO ANIMATION */
+
+.intro-logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 18px;
+
+  animation: logoReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* COMPANY NAME (IGIRE PROGRESSIVE FILL) */
+
+.intro-title {
+  position: relative;
+  margin-top: 24px;
+
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  user-select: none;
+
+  animation: titleReveal 0.9s ease-out 0.3s both;
+}
+
+.intro-title-base {
+  color: rgba(37, 41, 35, 0.2); /* Faded #252923 before loading */
+}
+
+.intro-title-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #252923; /* Full #252923 as progress reaches 100% */
+  transition: width 0.08s linear;
+}
+
+.intro-subtitle {
+  margin-top: 12px;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+
+  color: #9a7950;
+
+  animation: titleReveal 0.9s ease-out 0.5s both;
+}
+
+/* BOTTOM-RIGHT PERCENTAGE COUNTER */
+
+.intro-counter {
+  position: absolute;
+  bottom: 32px;
+  right: 40px;
+
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #252923;
+
+  animation: titleReveal 0.9s ease-out 0.4s both;
+}
+
+.intro-screen-leaving {
+  animation: introExit 0.9s ease-in-out forwards;
+}
+
+.homepage-hidden {
+  opacity: 0;
+  transform: scale(1.04) translateY(20px);
+  visibility: hidden;
+}
+
+.homepage-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  visibility: visible;
+
+  transition:
+    opacity 1s ease,
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
+}
+
+/* =================================
+   KEYFRAME ANIMATIONS
+================================= */
+
+@keyframes backgroundReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes logoReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-8deg);
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introExit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+    visibility: hidden;
+  }
+}
+
+/* =================================
+   ACCESSIBILITY
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-screen,
+  .intro-logo,
+  .intro-title,
+  .intro-subtitle,
+  .intro-counter,
+  .intro-screen-leaving {
+    animation: none;
+  }
+
+  .homepage-hidden,
+  .homepage-visible {
+    transition: none;
+    transform: none;
+  }
+}
